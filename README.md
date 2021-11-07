@@ -3,6 +3,7 @@
 
 ## Features
 - TopMost Window
+- Hotkey Number Generation
 - Generation Timer
 - 4 Themes, including HalfLife theme
 
