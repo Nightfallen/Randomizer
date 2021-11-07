@@ -1,5 +1,7 @@
 # Visual studio specific
 x64/
+Debug/
+Release/
 
 # Prerequisites
 *.d

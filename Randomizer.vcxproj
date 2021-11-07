@@ -118,7 +118,7 @@
       <ForcedIncludeFiles>$(ProjectDir)/source/precompiled.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -161,7 +161,7 @@
       <ForcedIncludeFiles>$(ProjectDir)/source/precompiled.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -202,9 +202,11 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="source\Application.h" />
+    <ClInclude Include="source\constants.hpp" />
     <ClInclude Include="source\Fonts.hpp" />
     <ClInclude Include="source\helpers.hpp" />
     <ClInclude Include="source\Interface.hpp" />
+    <ClInclude Include="source\Keyboard.hpp" />
     <ClInclude Include="source\precompiled.h" />
     <ClInclude Include="source\Settings.hpp" />
     <ClInclude Include="source\structures.hpp" />

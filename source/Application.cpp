@@ -131,10 +131,20 @@ namespace Nightfallen
 		// For 'realWndProc' purposes
 		SetWindowLongPtrW(hwnd_, GWLP_USERDATA, (LONG_PTR)this);
 
-		// Show the window
-		::ShowWindow(hwnd_, SW_SHOWDEFAULT);
+		this->TaskbarTweak();
 		::UpdateWindow(hwnd_);
-		//SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	}
+
+	void Application::TaskbarTweak()
+	{
+		long style = GetWindowLong(hwnd_, GWL_EXSTYLE);
+		//style &= ~(WS_VISIBLE);
+		style |= WS_EX_TOOLWINDOW;   
+		//style &= ~(WS_EX_APPWINDOW);
+
+		//ShowWindow(hwnd_, SW_HIDE);
+		SetWindowLong(hwnd_, GWL_EXSTYLE, style);
+		ShowWindow(hwnd_, SW_SHOW); // show the window for the new style to come into effect
 	}
 
 	void Application::InitializeImgui()
@@ -146,9 +156,9 @@ namespace Nightfallen
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
-		io.ConfigViewportsNoTaskBarIcon = true;
+		io.ConfigViewportsNoTaskBarIcon = false;
 		io.ConfigViewportsNoAutoMerge = true;
-		io.ConfigViewportsNoTaskBarIcon = true;
+		//io.ConfigViewportsNoTaskBarIcon = true;
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
@@ -165,21 +175,16 @@ namespace Nightfallen
 		style.WindowMinSize = {200, 100};
 
 		// Application handles windows sizing on its own
-		auto path_ini_file = std::filesystem::temp_directory_path().parent_path().parent_path();
-		path_ini_file /= "Roaming";
-		path_ini_file /= "Randomizer App";
-		path_ini_file /= "imgui.ini";
+		ImGui::GetIO().IniFilename = NULL;
 
-		static std::string path_ini = path_ini_file.string();
-		ImGui::GetIO().IniFilename = path_ini.data();
 		// Setup Platform/Renderer backends
 		ImGui_ImplWin32_Init(hwnd_);
 		ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 
-		//ImGuiIO& io = ImGui::GetIO();
-		//io.Fonts->AddFontDefault();
 		BuildDefaultFont(io);
 	}
+
+
 
 	Application::Application()
 	{

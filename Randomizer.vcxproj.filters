@@ -116,5 +116,11 @@
     <ClInclude Include="fonts\DefinesFontAwesome.hpp">
       <Filter>fonts</Filter>
     </ClInclude>
+    <ClInclude Include="source\Keyboard.hpp">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\constants.hpp">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

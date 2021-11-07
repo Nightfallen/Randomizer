@@ -30,6 +30,9 @@ namespace Nightfallen
 		void InitializeWindow();
 		void InitializeImgui();
 
+		// A little hack function to hide main winapi window in taskbar
+		// and leave there only imgui's docking windows
+		void TaskbarTweak();
 	public:
 		Application();
 		~Application();

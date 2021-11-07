@@ -21,7 +21,9 @@
 #include <format>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <random>
+#include <regex>
 #include <string_view>
 #include <string>
 #include <vector>
