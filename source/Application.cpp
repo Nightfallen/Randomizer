@@ -150,17 +150,13 @@ namespace Nightfallen
 
 		int sz_icon = 128;
 		HICON hIcon = NULL;
-		//int offset = LookupIconIdFromDirectoryEx((PBYTE)fIcon.data(), TRUE, sz_icon, sz_icon, LR_DEFAULTCOLOR);
-		//offset = LookupIconIdFromDirectoryEx((PBYTE)fIcon.data(), TRUE, sz_icon, sz_icon, LR_DEFAULTCOLOR);
-		if (offset != 0) {
-			//hIcon = CreateIconFromResourceEx((PBYTE)fIcon.data() + offset, szfile - offset, TRUE, 0x30000, sz_icon, sz_icon, LR_DEFAULTCOLOR);
+		if (offset != 0) 
+		{
 			hIcon = CreateIconFromResourceEx((PBYTE)icon_app_data + offset, icon_app_size - offset, TRUE, 0x30000, sz_icon, sz_icon, LR_DEFAULTCOLOR);
-			if (hIcon != NULL) {
-				printf("SUCCESS");
-				return 0;
-			}
+			if (hIcon != NULL) 
+				return hIcon;
 		}
-		return hIcon;
+		return NULL;
 	}
 
 	void Application::TaskbarTweak()

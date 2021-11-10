@@ -739,6 +739,17 @@ static void ImGui_ImplWin32_CreateWindow(ImGuiViewport* viewport)
         vd->DwExStyle, _T("ImGui Platform"), _T("Untitled"), vd->DwStyle,   // Style, class name, window name
         rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,    // Window area
         parent_window, NULL, ::GetModuleHandle(NULL), NULL);                    // Parent window, Menu, Instance, Param
+
+#ifdef _WIN64
+    constexpr auto idGclIcon = GCLP_HICON;
+#elif defined(_WIN32)
+    constexpr auto idGclIcon = GCL_HICON;
+#endif
+
+    // #APP_ICON
+    HICON icon = (HICON)GetClassLong(parent_window, idGclIcon);
+    SendMessage(vd->Hwnd, WM_SETICON, ICON_BIG, (LPARAM)icon);
+
     vd->HwndOwned = true;
     viewport->PlatformRequestResize = false;
     viewport->PlatformHandle = viewport->PlatformHandleRaw = vd->Hwnd;
