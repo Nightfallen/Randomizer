@@ -740,6 +740,9 @@ static void ImGui_ImplWin32_CreateWindow(ImGuiViewport* viewport)
         rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,    // Window area
         parent_window, NULL, ::GetModuleHandle(NULL), NULL);                    // Parent window, Menu, Instance, Param
 
+	if (!Impl_Win32_EnableGlassEffect(vd->Hwnd))
+		OutputDebugStringA("Your system doesn't support 'Glass Effect' windows");
+
 #ifdef _WIN64
     constexpr auto idGclIcon = GCLP_HICON;
 #elif defined(_WIN32)
@@ -1058,6 +1061,52 @@ void ImGui_ImplWin32_EnableAlphaCompositing(void* hwnd)
         bb.dwFlags = DWM_BB_ENABLE;
         ::DwmEnableBlurBehindWindow((HWND)hwnd, &bb);
     }
+}
+
+// Taken from 'https://gist.github.com/ethanhs/0e157e4003812e99bf5bc7cb6f73459f'
+bool Impl_Win32_EnableGlassEffect(HWND hwnd)
+{
+	struct ACCENTPOLICY
+	{
+		int nAccentState;
+		int nFlags;
+		int nColor;
+		int nAnimationId;
+	};
+	struct WINCOMPATTRDATA
+	{
+		int nAttribute;
+		PVOID pData;
+		ULONG ulDataSize;
+	};
+	typedef BOOL(WINAPI* pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA*);
+	auto library = LoadLibraryA("user32.dll");
+	auto address = GetProcAddress(library, "SetWindowCompositionAttribute");
+	if (!address)
+	{
+		return false;
+		FreeLibrary(library);
+	}
+
+	const pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)address;
+	if (SetWindowCompositionAttribute)
+	{
+        // There is some bug with rendering on window resizing
+		ACCENTPOLICY policy = { 3, 0, 0, 0 }; // ACCENT_ENABLE_BLURBEHIND=3...
+        // '{ 3, 0, 0, 0 }'     - Standard blue
+        // '{ 4, 0, 155, 0 }'   - Acrylic blur
+        // Possible flags:
+        // 1 - ?
+        // 2 - ?
+        // 3 - ?
+        // 4 - full screen blurred ????
+        // 6 - like 4 ????
+        // policy = { 4, 2, 155, 0 };
+		WINCOMPATTRDATA data = { 19, &policy, sizeof(ACCENTPOLICY) }; // WCA_ACCENT_POLICY=19
+		SetWindowCompositionAttribute(hwnd, &data);
+	}
+	FreeLibrary(library);
+	return true;
 }
 
 //---------------------------------------------------------------------------------------------------------

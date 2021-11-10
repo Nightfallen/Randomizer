@@ -114,10 +114,11 @@ namespace Nightfallen
 			assert(dwError);
 		}
 
-		// Size of window is made 100x100 because imgui's docking feature creates a new window
-		hwnd_ = CreateWindowEx(WS_EX_TOPMOST, wc_.lpszClassName, wndName, WS_POPUP  | WS_SYSMENU, 100, 100, 100, 100, NULL, NULL, wc_.hInstance, NULL);
+		// Size of window is made '{ wnd_wh, wnd_wh }' because imgui's docking feature creates a new window
+		int wnd_wh = 50;
+		hwnd_ = CreateWindowEx(WS_EX_TOPMOST, wc_.lpszClassName, wndName, WS_POPUP | WS_SYSMENU, 100, 100, wnd_wh, wnd_wh, NULL, NULL, wc_.hInstance, NULL);
 
-		// Make 100x100 area transparent
+		// Make main window's area fully transparent
 		SetWindowLong(hwnd_, GWL_EXSTYLE, (int)GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED | WS_EX_TRANSPARENT);
 		SetLayeredWindowAttributes(hwnd_, RGB(0, 0, 0), 0, LWA_ALPHA);
 
@@ -132,8 +133,9 @@ namespace Nightfallen
 
 		// For 'realWndProc' purposes
 		SetWindowLongPtrW(hwnd_, GWLP_USERDATA, (LONG_PTR)this);
-
-		this->TaskbarTweak();
+		Impl_Win32_EnableGlassEffect(hwnd_);
+		//this->TaskbarTweak();
+		ShowWindow(hwnd_, SW_SHOWDEFAULT);
 		::UpdateWindow(hwnd_);
 	}
 

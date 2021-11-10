@@ -26,7 +26,7 @@ void SettingsWindow(bool* is_open, AppSettings& settings)
 	}
 
 
-	ImGui::Begin("Settings", is_open);
+	ImGui::Begin("Settings", is_open, ImGuiWindowFlags_NoBackground);
 
 	ImVec2 szItemWidth = ImGui::GetWindowSize() - style.WindowPadding * 2;
 	szItemWidth.y = 0;
@@ -100,7 +100,7 @@ void RandomizerWindow(bool* is_open, AppSettings& settings)
 		just_once = false;
 	}
 
-	ImGui::Begin("Randomizer", is_open);
+	ImGui::Begin("Randomizer", is_open, ImGuiWindowFlags_NoBackground);
 	static auto rand_int = GetRandomInt(0, 100);
 	static auto start = std::chrono::steady_clock::now();
 	auto end = std::chrono::steady_clock::now();
@@ -170,7 +170,7 @@ void UI_HANDLER(HWND hwnd)
 	static AppSettings settings = { ReadSettings() };
 	settings.hwnd = hwnd;
 	static bool show_randomizer = true;
-	auto prevTheme = -1;
+	static auto prevTheme = -1;
 
 	// Close 
 	if (!show_randomizer)
