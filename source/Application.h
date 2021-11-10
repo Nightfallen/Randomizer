@@ -26,9 +26,10 @@ namespace Nightfallen
 		static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		LRESULT CALLBACK realWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
 		void InitializeWindow();
 		void InitializeImgui();
+
+		HICON LoadIcon();
 
 		// A little hack function to hide main winapi window in taskbar
 		// and leave there only imgui's docking windows

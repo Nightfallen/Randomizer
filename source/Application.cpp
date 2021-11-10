@@ -1,5 +1,6 @@
 ﻿#include "Application.h"
 #include "source/Fonts.hpp"
+#include "fonts/icon_app.hpp"
 
 #ifndef WM_DPICHANGED
 #define WM_DPICHANGED 0x02E0 // From Windows SDK 8.1+ headers
@@ -106,6 +107,7 @@ namespace Nightfallen
 	void Application::InitializeWindow()
 	{
 		wc_ = { sizeof(WNDCLASSEXW), CS_CLASSDC, this->WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, wndClassName, NULL };
+		wc_.hIcon = this->LoadIcon();
 		if (!::RegisterClassExW(&wc_))
 		{
 			DWORD dwError = ::GetLastError();
@@ -133,6 +135,32 @@ namespace Nightfallen
 
 		this->TaskbarTweak();
 		::UpdateWindow(hwnd_);
+	}
+
+	HICON Application::LoadIcon()
+	{
+		// Somehow it works: https://stackoverflow.com/a/51806326
+		WORD icon_count = 0;
+		icon_count = ((WORD*)icon_app_data)[2];
+		int offset = 3 * sizeof(WORD) + 16 * icon_count;
+
+		icon_app_size;
+		icon_app_data;
+
+
+		int sz_icon = 128;
+		HICON hIcon = NULL;
+		//int offset = LookupIconIdFromDirectoryEx((PBYTE)fIcon.data(), TRUE, sz_icon, sz_icon, LR_DEFAULTCOLOR);
+		//offset = LookupIconIdFromDirectoryEx((PBYTE)fIcon.data(), TRUE, sz_icon, sz_icon, LR_DEFAULTCOLOR);
+		if (offset != 0) {
+			//hIcon = CreateIconFromResourceEx((PBYTE)fIcon.data() + offset, szfile - offset, TRUE, 0x30000, sz_icon, sz_icon, LR_DEFAULTCOLOR);
+			hIcon = CreateIconFromResourceEx((PBYTE)icon_app_data + offset, icon_app_size - offset, TRUE, 0x30000, sz_icon, sz_icon, LR_DEFAULTCOLOR);
+			if (hIcon != NULL) {
+				printf("SUCCESS");
+				return 0;
+			}
+		}
+		return hIcon;
 	}
 
 	void Application::TaskbarTweak()
@@ -183,8 +211,6 @@ namespace Nightfallen
 
 		BuildDefaultFont(io);
 	}
-
-
 
 	Application::Application()
 	{

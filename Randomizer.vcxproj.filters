@@ -122,5 +122,8 @@
     <ClInclude Include="source\constants.hpp">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="fonts\icon_app.hpp">
+      <Filter>fonts</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -63,9 +63,9 @@ bool HotKeyEx(const char* label, HotKey& hotkey, const ImVec2& size_arg = ImVec2
 	if (!ImGui::ItemAdd(total_bb, id, 0, ImGuiItemFlags_Inputable))
 		return false;
 
-	const bool focus_requested = (ImGui::GetItemStatusFlags() & ImGuiItemStatusFlags_Focused) != 0;
+	//const bool focus_requested = (ImGui::GetItemStatusFlags() & ImGuiItemStatusFlags_Focused) != 0;
 	const bool focus_requested_by_tab = (ImGui::GetItemStatusFlags() & ImGuiItemStatusFlags_FocusedByTabbing) != 0;
-	const bool focus_requested_by_code = (ImGui::GetItemStatusFlags() & ImGuiItemStatusFlags_FocusedByCode) != 0;
+	//const bool focus_requested_by_code = (ImGui::GetItemStatusFlags() & ImGuiItemStatusFlags_FocusedByCode) != 0;
 	static bool hovered = false, held = false;
 
 	hovered = ImGui::ItemHoverable(frame_bb, id);
@@ -78,7 +78,7 @@ bool HotKeyEx(const char* label, HotKey& hotkey, const ImVec2& size_arg = ImVec2
 	}
 
 	auto& [keys, default_keys, nMaxKeys] = hotkey;
-	if (focus_requested || user_clicked) {
+	if (user_clicked) {
 		if (context->ActiveId != id) {
 			// Start edition
 			memset(io.MouseDown, 0, sizeof(io.MouseDown));
