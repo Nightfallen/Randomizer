@@ -134,7 +134,7 @@ namespace Nightfallen
 		// For 'realWndProc' purposes
 		SetWindowLongPtrW(hwnd_, GWLP_USERDATA, (LONG_PTR)this);
 		Impl_Win32_EnableGlassEffect(hwnd_);
-		//this->TaskbarTweak();
+		this->TaskbarTweak();
 		ShowWindow(hwnd_, SW_SHOWDEFAULT);
 		::UpdateWindow(hwnd_);
 	}
