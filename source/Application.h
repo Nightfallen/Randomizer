@@ -3,6 +3,7 @@
 
 #include "source/precompiled.h"
 #include "source/structures.hpp"
+#include "source/Freetype.hpp"
 
 namespace Nightfallen 
 {
@@ -17,6 +18,7 @@ namespace Nightfallen
 		IDXGISwapChain* g_pSwapChain					= NULL;
 		ID3D11RenderTargetView* g_mainRenderTargetView	= NULL;
 		ProcUIHandler ui_handler						= NULL;
+		FreetypeTest freetype;
 
 		bool CreateDeviceD3D(HWND hWnd);
 		void CleanupDeviceD3D();

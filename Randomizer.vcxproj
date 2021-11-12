@@ -178,6 +178,7 @@
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_freetype.cpp" />
     <ClCompile Include="imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="fonts\icon_app.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_freetype.h" />
     <ClInclude Include="imgui\imgui_impl_dx11.h" />
     <ClInclude Include="imgui\imgui_impl_win32.h" />
     <ClInclude Include="imgui\imgui_internal.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\constants.hpp" />
     <ClInclude Include="source\Fonts.hpp" />
+    <ClInclude Include="source\Freetype.hpp" />
     <ClInclude Include="source\helpers.hpp" />
     <ClInclude Include="source\Interface.hpp" />
     <ClInclude Include="source\Keyboard.hpp" />

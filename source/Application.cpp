@@ -197,8 +197,6 @@ namespace Nightfallen
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
-		// Min size of window
-		style.WindowMinSize = {200, 100};
 
 		// Application handles windows sizing on its own
 		ImGui::GetIO().IniFilename = NULL;
@@ -208,6 +206,7 @@ namespace Nightfallen
 		ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 
 		BuildDefaultFont(io);
+		freetype = {};
 	}
 
 	Application::Application()
@@ -254,6 +253,13 @@ namespace Nightfallen
 			}
 			if (done)
 				break;
+
+			if (freetype.PreNewFrame())
+			{
+				// REUPLOAD FONT TEXTURE TO GPU
+				ImGui_ImplDX11_InvalidateDeviceObjects();
+				ImGui_ImplDX11_CreateDeviceObjects();
+			}
 
 			// Start the Dear ImGui frame
 			ImGui_ImplDX11_NewFrame();

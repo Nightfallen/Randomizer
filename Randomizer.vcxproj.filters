@@ -60,6 +60,9 @@
     <ClCompile Include="source\Application.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="imgui\imgui_freetype.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imgui_impl_dx11.h">
@@ -124,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="fonts\icon_app.hpp">
       <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_freetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Freetype.hpp">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
