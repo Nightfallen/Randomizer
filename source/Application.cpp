@@ -184,7 +184,6 @@ namespace Nightfallen
 
 		io.ConfigViewportsNoTaskBarIcon = false;
 		io.ConfigViewportsNoAutoMerge = true;
-		//io.ConfigViewportsNoTaskBarIcon = true;
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();

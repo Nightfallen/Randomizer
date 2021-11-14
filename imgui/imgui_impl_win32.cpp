@@ -1101,7 +1101,7 @@ bool Impl_Win32_EnableGlassEffect(HWND hwnd)
         // 3 - ?
         // 4 - full screen blurred ????
         // 6 - like 4 ????
-        // policy = { 4, 2, 155, 0 };
+        policy = { 3, 3, 0, 0 };
 		WINCOMPATTRDATA data = { 19, &policy, sizeof(ACCENTPOLICY) }; // WCA_ACCENT_POLICY=19
 		SetWindowCompositionAttribute(hwnd, &data);
 	}

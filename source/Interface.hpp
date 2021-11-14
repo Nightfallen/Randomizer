@@ -83,14 +83,13 @@ void SettingsWindow(bool* is_open, AppSettings& settings)
 
 void RandomizerWindow(bool* is_open, AppSettings& settings)
 {
+	auto& style = ImGui::GetStyle();
 	DefineSettingsBinding(settings);
 	static std::string text_rnd_number = "";
 	std::string_view fmt_rnd_number = "{}";
-
-	RECT lpRect{};
-	GetWindowRect(hwnd, &lpRect);
-	int width = lpRect.right - lpRect.left;
-	int height = lpRect.bottom - lpRect.top;
+	ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[2]);
+	ImVec2 btnSize = ImGui::CalcTextSize(ICON_FA_WRENCH, NULL, true, 2.f);
+	ImGui::PopFont();
 
 	static bool just_once = true;
 	if (just_once)
@@ -100,7 +99,7 @@ void RandomizerWindow(bool* is_open, AppSettings& settings)
 		just_once = false;
 	}
 
-	ImGui::Begin("Randomizer", is_open, ImGuiWindowFlags_NoBackground);
+	ImGui::Begin("Randomizer", is_open, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoScrollbar);
 	static auto rand_int = GetRandomInt(0, 100);
 	static auto start = std::chrono::steady_clock::now();
 	auto end = std::chrono::steady_clock::now();
@@ -116,33 +115,36 @@ void RandomizerWindow(bool* is_open, AppSettings& settings)
 	auto szText = ImGui::CalcTextSize(std::format(fmt_rnd_number, rand_int).data());
 	auto posCursor = ImGui::GetCursorPos();
 	ImVec2 nextPosCursor = (ImGui::GetWindowSize() - szText) * 0.5f;
-	nextPosCursor.y = posCursor.y;
-	ImGui::SetCursorPosX(nextPosCursor.x);
+	nextPosCursor.y = posCursor.y - style.WindowPadding.y - style.FramePadding.y;
+	nextPosCursor.x -= btnSize.x / 2;
+	ImGui::SetCursorPos(nextPosCursor);
 	ImGui::Text(std::format(fmt_rnd_number, rand_int).data());
 	ImGui::PopFont();
 
-	ImVec2 btnSize = { 90, 0 };
-	auto& style = ImGui::GetStyle();
-	ImVec2 szButtons = btnSize * 2;
-	szButtons.x += style.ItemSpacing.x;
-	nextPosCursor = (ImGui::GetWindowSize() - szButtons) * 0.5f;
-	ImGui::SetCursorPosX(nextPosCursor.x);
-	if (ImGui::Button("Random!", btnSize))
-	{
-		rand_int = GetRandomInt(0, 100);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button(ICON_FA_COG " Settings", btnSize))
+	auto wndSize = ImGui::GetWindowSize();
+	auto curStartPos = ImGui::GetCursorStartPos();
+
+	ImVec2 resCurPos = curStartPos;
+	resCurPos.x = wndSize.x - curStartPos.x;
+	resCurPos = wndSize;
+	resCurPos.y = curStartPos.y;
+	resCurPos.x -= style.WindowPadding.x * 2;
+
+	ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[2]);
+	resCurPos.x -= btnSize.x;
+	ImGui::SetCursorPos(resCurPos);
+	if (ImGui::Button(ICON_FA_WRENCH, btnSize * 1.5f))
 	{
 		bSettings = !bSettings;
 	}
+	ImGui::PopFont();
 
 	if (!ImGui::IsWindowCollapsed())
 	{
-		nWndRnd = ImGui::GetWindowSize();
-		posWndRnd = ImGui::GetWindowPos();
+		nWndRnd		= ImGui::GetWindowSize();
+		posWndRnd	= ImGui::GetWindowPos();
 	}
-
+	
 	ImGui::End();
 }
 
@@ -166,6 +168,7 @@ void ChangeTheme(int themeCode)
 
 void UI_HANDLER(HWND hwnd)
 {
+	RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE | RDW_ERASE);
 	// Our state
 	static AppSettings settings = { ReadSettings() };
 	settings.hwnd = hwnd;

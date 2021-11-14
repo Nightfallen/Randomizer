@@ -27,7 +27,12 @@ void BuildDefaultFont(ImGuiIO& io)
 	ImFont* font2 = io.Fonts->AddFontFromMemoryCompressedTTF(binIconsFont_compressed_data, binIconsFont_compressed_size, 14.f, &icons_config, icons_ranges);
 	io.Fonts->Build();
 
-	ImFont* font3 = io.Fonts->AddFontFromMemoryCompressedTTF(binRobotoFont_compressed_data, binRobotoFont_compressed_size, 100.f, &font_config, ranges);
+	ImFont* font3 = io.Fonts->AddFontFromMemoryCompressedTTF(binRobotoFont_compressed_data, binRobotoFont_compressed_size, 80.f, &font_config, ranges);
+	io.Fonts->Build();
+
+	ImFont* font5 = io.Fonts->AddFontFromMemoryCompressedTTF(binRobotoFont_compressed_data, binRobotoFont_compressed_size, 20.f, &font_config, ranges);
+	ImFont* font6 = io.Fonts->AddFontFromMemoryCompressedTTF(binIconsFont_compressed_data, binIconsFont_compressed_size, 20.f, &icons_config, icons_ranges);
+	io.Fonts->Build();
 }
 
 
